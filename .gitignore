@@ -1,8 +1,13 @@
+Backend/migrations/__pycache__/
+Backend/migrations/versions/__pycache__/
 Backend/src/__pycache__/
 Backend/src/config/__pycache__/
-Backend/migrations/__pycache__/
 Backend/src/db/__pycache__/
 Backend/src/models/__pycache__/
+Backend/src/routes/__pycache__/
+Backend/src/schemas/__pycache__/
+Backend/src/services/__pycache__/
+Backend/migrations/versions/__pycache__/ca815c28ba12_creaating_users_table.cpython-312.pyc
 .idea
 */.idea
 *.env
