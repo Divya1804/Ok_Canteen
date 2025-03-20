@@ -5,11 +5,12 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
+from alembic import context
+from src.models.users import User
 from sqlmodel import SQLModel
 from src.config.config_db import Config
 
 
-from alembic import context
 
 database_url = Config.DATABASE_URL
 # this is the Alembic Config object, which provides

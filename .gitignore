@@ -1,6 +1,8 @@
 Backend/src/__pycache__/
 Backend/src/config/__pycache__/
 Backend/migrations/__pycache__/
+Backend/src/db/__pycache__/
+Backend/src/models/__pycache__/
 .idea
 */.idea
 *.env
