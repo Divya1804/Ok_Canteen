@@ -6,7 +6,7 @@ class UserCreateModel(BaseModel):
     username: str = Field(max_length=20)
     email: str = Field(
         max_length=50,
-        pattern=r'^[a-zA-Z0-9_.+-]+@ddu.ac.in+$'
+        pattern=r'^[a-zA-Z0-9_.+-]+@ddu.ac.in$'
     )
     password_hash: str = Field(min_length=6)
     first_name: str
@@ -22,3 +22,10 @@ class UserModel(BaseModel):
     is_verified: bool
     created_at: datetime
     updated_at: datetime
+
+class UserLoginModel(BaseModel):
+    email: str = Field(
+        max_length=50,
+        pattern=r'^[a-zA-Z0-9_.+-]+@ddu.ac.in$'
+    )
+    password_hash: str = Field(min_length=6)
