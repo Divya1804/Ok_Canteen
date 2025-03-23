@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -7,6 +7,7 @@ from src.services.user_auth_service import UserService
 from src.db.main import get_session
 from src.utils.user_utils import create_access_tokens, decode_token, verify_password
 from fastapi.responses import JSONResponse
+from src.utils.dependencies import RefreshTokenBearer
 
 REFRESH_TOKEN_EXPIRY = 2
 
@@ -21,6 +22,18 @@ async def create_user_account(user_data: UserCreateModel,session: AsyncSession =
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="User with this email already exists...")
     new_user = await user_service.create_user_acc(user_data, session)
     return new_user
+
+@auth_router.get("/refresh")
+async def get_new_access_token(token_details: dict = Depends(RefreshTokenBearer())):
+    print(token_details)
+    print()
+    expiry_timestamp = token_details["exp"]
+
+    if datetime.fromtimestamp(expiry_timestamp) > datetime.now():
+        new_access_token = create_access_tokens(user_data=token_details["user"])
+
+        return JSONResponse(content={"access_token": new_access_token})
+
 
 
 @auth_router.post('/login')
