@@ -7,7 +7,8 @@ from src.services.user_auth_service import UserService
 from src.db.main import get_session
 from src.utils.user_utils import create_access_tokens, decode_token, verify_password
 from fastapi.responses import JSONResponse
-from src.utils.dependencies import RefreshTokenBearer
+from src.utils.dependencies import RefreshTokenBearer,AccessTokenBearer
+from src.db.redis import add_jti_to_blocklist
 
 REFRESH_TOKEN_EXPIRY = 2
 
@@ -34,6 +35,17 @@ async def get_new_access_token(token_details: dict = Depends(RefreshTokenBearer(
 
         return JSONResponse(content={"access_token": new_access_token})
 
+
+@auth_router.get('/logout')
+async def revoke_token(token_details: dict = Depends(AccessTokenBearer())):
+    jti = token_details['jti']
+    await add_jti_to_blocklist(jti)
+
+    return JSONResponse(content={
+            "message" : "Logged-out Successfully..."
+        },
+        status_code= status.HTTP_200_OK
+    )
 
 
 @auth_router.post('/login')
