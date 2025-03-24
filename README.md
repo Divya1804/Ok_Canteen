@@ -34,20 +34,21 @@
    ```
 2. Create a virtual environment and install dependencies:
    ```sh
+   cd Backend
    python -m venv venv
    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
    pip install -r requirements.txt
    ```
 3. Run the FastAPI server:
    ```sh
-   uvicorn main:app --reload
+   fastapi dev src/main.py --port 5000
    ```
 4. Access the API documentation at: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 ### Frontend Setup (Optional)
 1. Navigate to the frontend directory:
    ```sh
-   cd frontend
+   cd Frontend
    ```
 2. Install dependencies:
    ```sh
