@@ -7,13 +7,14 @@ from src.services.user_auth_service import UserService
 from src.db.main import get_session
 from src.utils.user_utils import create_access_tokens, decode_token, verify_password
 from fastapi.responses import JSONResponse
-from src.utils.dependencies import RefreshTokenBearer,AccessTokenBearer
+from src.utils.dependencies import RefreshTokenBearer,AccessTokenBearer, get_current_user, RoleChecker
 from src.db.redis import add_jti_to_blocklist
 
 REFRESH_TOKEN_EXPIRY = 2
 
 auth_router = APIRouter()
 user_service = UserService()
+role_check = Depends(RoleChecker(['USER', 'ADMIN']))
 
 @auth_router.post('/signup', response_model=UserModel, status_code=status.HTTP_201_CREATED, description="New user is created")
 async def create_user_account(user_data: UserCreateModel,session: AsyncSession = Depends(get_session)):
@@ -47,6 +48,9 @@ async def revoke_token(token_details: dict = Depends(AccessTokenBearer())):
         status_code= status.HTTP_200_OK
     )
 
+@auth_router.get('/me', dependencies=[role_check])
+async def get_user_data(user = Depends(get_current_user)):
+    return user
 
 @auth_router.post('/login')
 async def login_users(login_data: UserLoginModel, session: AsyncSession = Depends(get_session)):
@@ -60,12 +64,14 @@ async def login_users(login_data: UserLoginModel, session: AsyncSession = Depend
         if valid_password:
             access_token = create_access_tokens(user_data={
                 'email': user.email,
-                'user_uid': str(user.uid)
+                'user_uid': str(user.uid),
+                'role' : user.role
             })
 
             refresh_token = create_access_tokens(user_data={
                     'email': user.email,
-                    'user_uid': str(user.uid)
+                    'user_uid': str(user.uid),
+                    'role': user.role
                 },
                 refresh=True,
                 expiry=timedelta(days = REFRESH_TOKEN_EXPIRY)
@@ -78,7 +84,8 @@ async def login_users(login_data: UserLoginModel, session: AsyncSession = Depend
                     "refresh_token": refresh_token,
                     "user": {
                         "email": user.email,
-                        "uid": str(user.uid)
+                        "uid": str(user.uid),
+                        "role": user.role
                     }
 
                 }

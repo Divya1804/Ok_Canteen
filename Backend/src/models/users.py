@@ -21,6 +21,13 @@ class User(SQLModel, table=True):
     password_hash : str = Field(exclude=True)
     first_name : str
     last_name : str
+    role: str = Field(
+        sa_column=Column(
+            pg.VARCHAR,
+            nullable=False,
+            server_default="USER"  # Sets default role at the DB level
+        )
+    )
     is_verified : bool = Field(default=False)
     created_at :datetime = Field(
         sa_column = Column(

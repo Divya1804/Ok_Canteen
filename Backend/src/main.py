@@ -17,7 +17,7 @@ app = FastAPI(
     title="Canteen Management System",
     description="A large scale project to phase and solve all the new deficulties.",
     version=version,
-    lifespan=life_span
+    # lifespan=life_span
 )
 
 app.include_router(auth_router, prefix=f"/api/{version}/user")
