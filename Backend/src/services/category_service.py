@@ -15,7 +15,7 @@ class CategoryService:
     async def get_all_categories(self, session: AsyncSession):
         statement = select(Category)
         result = await session.exec(statement)
-        return result
+        return result.all()
 
     async def category_exist(self, category_name: str, session: AsyncSession):
         category = await self.get_category_details(category_name, session)
@@ -49,7 +49,7 @@ class CategoryService:
     async def delete_category(self, category_name: str, session: AsyncSession) -> None:
         category = await self.get_category_details(category_name, session)
         if not category:
-            return None
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No category found")
 
         await session.delete(category)
         await session.commit()

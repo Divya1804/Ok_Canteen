@@ -40,7 +40,7 @@ async def update_category_data(category_name: str, category_data: CategoryCreate
 
     return updated_category
 
-@category_router.delete('/{category_name')
+@category_router.delete('/{category_name}')
 async def delete_category(category_name: str, session: AsyncSession = Depends(get_session)):
     await category_service.delete_category(category_name, session)
     return JSONResponse(
