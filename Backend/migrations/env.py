@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 from src.models.users import User
+from src.models.categories import Category
 from sqlmodel import SQLModel
 from src.config.config_db import Config
 
