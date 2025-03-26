@@ -9,14 +9,15 @@ from src.utils.dependencies import AccessTokenBearer, RoleChecker
 category_router = APIRouter()
 category_service = CategoryService()
 access_token_bearer = AccessTokenBearer()
-role_check = Depends(RoleChecker(['ADMIN']))
+admin_role_check = Depends(RoleChecker(['ADMIN']))
+user_role_check = Depends(RoleChecker['ADMIN', 'USER'])
 
-@category_router.get('/', dependencies=[role_check])
+@category_router.get('/', dependencies=[user_role_check])
 async def get_all_categories(session: AsyncSession = Depends(get_session), _:dict = Depends(access_token_bearer)):
     all_categories = await category_service.get_all_categories(session)
     return all_categories
 
-@category_router.get('/{category_name}', dependencies=[role_check])
+@category_router.get('/{category_name}', dependencies=[user_role_check])
 async def get_category_by_name(category_name: str, session: AsyncSession = Depends(get_session), _:dict = Depends(access_token_bearer)):
     category_data = await category_service.get_category_details(category_name, session)
 
@@ -25,7 +26,7 @@ async def get_category_by_name(category_name: str, session: AsyncSession = Depen
 
     return category_data
 
-@category_router.post('/', dependencies=[role_check])
+@category_router.post('/', dependencies=[admin_role_check])
 async def create_category(category_data: CategoryCreateModel, session: AsyncSession = Depends(get_session), _:dict = Depends(access_token_bearer)):
     category = await category_service.create_category(category_data, session)
 
@@ -34,7 +35,7 @@ async def create_category(category_data: CategoryCreateModel, session: AsyncSess
 
     return category
 
-@category_router.put('/{category_name}', dependencies=[role_check])
+@category_router.put('/{category_name}', dependencies=[admin_role_check])
 async def update_category_data(category_name: str, category_data: CategoryCreateModel, session: AsyncSession = Depends(get_session), _:dict = Depends(access_token_bearer)):
     updated_category = await category_service.update_category_data(category_name, category_data, session)
 
@@ -43,7 +44,7 @@ async def update_category_data(category_name: str, category_data: CategoryCreate
 
     return updated_category
 
-@category_router.delete('/{category_name}', dependencies=[role_check])
+@category_router.delete('/{category_name}', dependencies=[admin_role_check])
 async def delete_category(category_name: str, session: AsyncSession = Depends(get_session), _:dict = Depends(access_token_bearer)):
     await category_service.delete_category(category_name, session)
     return JSONResponse(
