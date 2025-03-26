@@ -10,7 +10,7 @@ category_router = APIRouter()
 category_service = CategoryService()
 access_token_bearer = AccessTokenBearer()
 admin_role_check = Depends(RoleChecker(['ADMIN']))
-user_role_check = Depends(RoleChecker['ADMIN', 'USER'])
+user_role_check = Depends(RoleChecker(['ADMIN', 'USER']))
 
 @category_router.get('/', dependencies=[user_role_check])
 async def get_all_categories(session: AsyncSession = Depends(get_session), _:dict = Depends(access_token_bearer)):
