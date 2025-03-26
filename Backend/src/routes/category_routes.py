@@ -9,7 +9,7 @@ from src.utils.dependencies import AccessTokenBearer, RoleChecker
 category_router = APIRouter()
 category_service = CategoryService()
 access_token_bearer = AccessTokenBearer()
-role_check = Depends(RoleChecker(['USER', 'ADMIN']))
+role_check = Depends(RoleChecker(['ADMIN']))
 
 @category_router.get('/', dependencies=[role_check])
 async def get_all_categories(session: AsyncSession = Depends(get_session), _:dict = Depends(access_token_bearer)):
