@@ -1,5 +1,5 @@
 import uuid
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field
 from datetime import datetime
 
@@ -18,3 +18,10 @@ class ItemsModel(BaseModel):
     is_available: bool
     created_at: datetime
     updated_at: datetime
+
+class ItemUpdateModel(BaseModel):
+    item_name: Optional[str] = Field(max_length=255)
+    description: Optional[str] = Field(max_length=500, min_length=50)
+    price: Optional[float] = None
+    image_urls: Optional[List[str]] = None
+    is_available: Optional[bool] = None
