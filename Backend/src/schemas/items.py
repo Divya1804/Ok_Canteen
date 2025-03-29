@@ -20,8 +20,8 @@ class ItemsModel(BaseModel):
     updated_at: datetime
 
 class ItemUpdateModel(BaseModel):
-    item_name: Optional[str] = Field(max_length=255)
-    description: Optional[str] = Field(max_length=500, min_length=50)
+    item_name: Optional[str] = Field(max_length=255, default=None)
+    description: Optional[str] = Field(max_length=500, min_length=50, default=None)
     price: Optional[float] = None
     image_urls: Optional[List[str]] = None
     is_available: Optional[bool] = None

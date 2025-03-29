@@ -48,7 +48,7 @@ class ItemsService:
         if result.first() is None:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Category name not present...")
 
-        item = await self.get_items_data(item_name, session)
+        item = await self.get_items_data(category_name, item_name, session)
         if not item:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
 
@@ -66,7 +66,7 @@ class ItemsService:
         if result.first() is None:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Category name not present...")
 
-        item = await self.get_items_data(item_name, session)
+        item = await self.get_items_data(category_name, item_name, session)
         if not item:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Item not found")
 
