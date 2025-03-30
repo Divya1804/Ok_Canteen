@@ -48,3 +48,6 @@ class Fixed_dish(SQLModel, table=True):
             pg.TIMESTAMP, default=datetime.now, onupdate=datetime.now
         )
     )
+
+    def __repr__(self):
+        return f"<{self.day_of_week}'s Fixed_dish = {self.sabji_name}>"

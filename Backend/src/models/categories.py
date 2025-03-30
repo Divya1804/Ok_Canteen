@@ -44,4 +44,4 @@ class Category(SQLModel, table=True):
     )
 
     def __repr__(self):
-        return f"<Users {self.category_name}>"
+        return f"<Category {self.category_name}>"
