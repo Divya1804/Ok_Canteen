@@ -42,3 +42,6 @@ class Items(SQLModel, table=True):
             pg.TIMESTAMP, default=datetime.now, onupdate=datetime.now
         )
     )
+
+    def __repr__(self):
+        return f"<Items {self.item_name}>"
