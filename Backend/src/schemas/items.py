@@ -8,8 +8,6 @@ class ItemsCreateModel(BaseModel):
     description: str = Field(max_length=500, min_length=50)
     price: float
     image_urls: List[str]
-    created_at: Optional[datetime] = Field(default=datetime.now())
-    updated_at: Optional[datetime] = Field(default=datetime.now())
 
 class ItemsModel(BaseModel):
     item_name: str = Field(max_length=255)
@@ -27,4 +25,3 @@ class ItemUpdateModel(BaseModel):
     price: Optional[float] = None
     image_urls: Optional[List[str]] = None
     is_available: Optional[bool] = None
-    updated_at: datetime = Field(default=datetime.now())

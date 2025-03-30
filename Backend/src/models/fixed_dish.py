@@ -40,11 +40,11 @@ class Fixed_dish(SQLModel, table=True):
 
     created_at: datetime = Field(
         sa_column=Column(
-            pg.TIMESTAMP, default=datetime.now()
+            pg.TIMESTAMP, default=datetime.now
         )
     )
     updated_at: datetime = Field(
         sa_column=Column(
-            pg.TIMESTAMP, default=datetime.now(), onupdate=datetime.now()
+            pg.TIMESTAMP, default=datetime.now, onupdate=datetime.now
         )
     )
