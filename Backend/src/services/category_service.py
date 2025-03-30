@@ -38,7 +38,7 @@ class CategoryService:
         if not old_category_data:
             return None
 
-        for key, value in new_category_data.model_dump().items():
+        for key, value in new_category_data.model_dump(exclude_unset=True).items():
             setattr(old_category_data, key, value)
 
         session.add(old_category_data)

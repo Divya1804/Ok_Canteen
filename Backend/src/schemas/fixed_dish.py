@@ -9,8 +9,6 @@ class FixedDishCreateModel(BaseModel):
     image_urls: List[str]
     roti_count: int = Field(default = 3, ge=3)
     price: float = Field(default=0.0)
-    created_at: Optional[datetime] = Field(default=datetime.now())
-    updated_at: Optional[datetime] = Field(default=datetime.now())
 
 class FixedDishModel(BaseModel):
     fixed_dish_id: uuid.UUID
@@ -26,8 +24,7 @@ class FixedDishModel(BaseModel):
 class FixedDishUpdateModel(BaseModel):
     day_of_week: Optional[Literal["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]] = Field(default=None)
     sabji_name: Optional[str] = Field(max_length=50, default=None)
-    image_urls: Optional[List[str]] = Field(default_factory=[])
-    roti_count: Optional[int] = Field(default=3, ge=3)
-    price: Optional[float] = Field(default=0.0)
-    is_available: Optional[bool] = Field(default=True)
-    updated_at: Optional[datetime] = Field(default= datetime.now())
+    image_urls: Optional[List[str]] = None
+    roti_count: Optional[int] = None
+    price: Optional[float] = None
+    is_available: Optional[bool] = None
