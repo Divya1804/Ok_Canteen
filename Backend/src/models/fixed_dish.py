@@ -8,16 +8,21 @@ class Fixed_dish(SQLModel, table=True):
     __tablename__ = "fixed_dish"
 
     fixed_dish_id: uuid.UUID = Field(sa_column=Column(
-        pg.UUID, nullable=False, default=uuid.uuid4, primary_key=True
+        pg.UUID,
+        nullable=False,
+        default=uuid.uuid4,
+        primary_key=True
     ))
 
     day_of_week: str = Field(sa_column=Column(
-        unique=True,
-        nullable=False
+        pg.VARCHAR(255),
+        nullable=False,
+        unique=True
     ), max_length=10)
 
     sabji_name: str = Field(sa_column=Column(
-        nullable=False,
+        pg.VARCHAR(255),
+        nullable=False
     ), max_length=50)
 
     roti_count: int = Field(nullable=False, default = 3)
