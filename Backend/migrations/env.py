@@ -10,6 +10,7 @@ from src.models.users import User
 from src.models.categories import Category
 from src.models.items import Items
 from src.models.fixed_dish import Fixed_dish
+from src.models.reviews import Reviews
 from sqlmodel import SQLModel
 from src.config.config_db import Config
 
